@@ -1,0 +1,26 @@
+version: '3.0'
+
+services:
+  cache:
+    image: redis:7.0.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 10 1 --loglevel warning
+    volumes:
+      - cache:/data
+  app:
+    build:
+      context: .
+    ports:
+      - '8000:8000'
+    environment:
+      CACHE_HOST: cache
+      CACHE_PORT: 6379
+    links:
+      - cache
+    depends_on:
+      - cache
+
+volumes:
+  cache:
