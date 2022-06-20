@@ -4,7 +4,6 @@ from fastapi.routing import APIRouter
 from pydantic import BaseModel
 
 
-
 class Time(BaseModel):
     right_now: datetime
 

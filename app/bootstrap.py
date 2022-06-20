@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from app.di_container import DIContainer
 
-from app.routes import root
+from app.di_container import DIContainer
 from app.middleware import rate_limit_middleware
+from app.routes import root
 
 
 class Bootstrap:
