@@ -12,6 +12,7 @@ services:
   app:
     build:
       context: .
+    image: lucasconnellm/rate-limiting:latest
     ports:
       - '9001:8000'
     environment:
