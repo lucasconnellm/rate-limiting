@@ -10,6 +10,10 @@
       "request": "launch",
       "module": "uvicorn",
       "args": ["app.main:app", "--port", "8080", "--reload"],
+      "env": {
+        "CACHE_HOST": "localhost",
+        "CACHE_PORT": "6379"
+      },
       "jinja": true,
       "justMyCode": true
     }
