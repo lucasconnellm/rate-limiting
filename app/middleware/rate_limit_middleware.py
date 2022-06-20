@@ -37,6 +37,6 @@ async def throttle(
     except Exception as e:
         # TODO clean up
         logger.exception(str(e))
-        return Response(str(e), status_code=500)
+        return Response(str(e), status_code=500, media_type="text/plain")
     else:
         return response
