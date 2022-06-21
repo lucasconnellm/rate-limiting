@@ -4,13 +4,26 @@ A simple rate limiting example in front of FastAPI
 
 ### Running
 
+The default rate is 5 requests / 10 seconds which is obviously very low. I did it this way as it was easier for human eyes to test while prototyping.
+There is a crude automated [test](/test/test_server.py) which is hitting the remote ratelimiting.luxas.xyz server.
+
+**Changing rate** If you'd like to try out a different rate, simply adjust the rate [here](/app/di_container.py) in the client_limit variable and host locally
+
+#### Local
+
+I recommend using docker, as you need a Redis store for my implementation.
+
 Install docker, checkout this repo, and run
 
 ```
 docker-compose up -d --build
 ```
 
-in the root of the directory. Or just hit the [live demo](http://ratelimiting.luxas.xyz:9001)
+in the root of the directory.
+
+#### Remote
+
+Just hit the [live demo](http://ratelimiting.luxas.xyz:9001) I'm hosting using the Docker image
 
 ### About
 
@@ -33,6 +46,8 @@ There are a few key items I'd implement next, in no particular order:
 3. More robust error handling. The only error I'm handling particularly well is the "too many requests" (429) error.
 4. Client identification: the middleware is currently relying on request.client to get an IP. This will not do it the uvicorn server is behind a
    reverse proxy, as it likely would be. We should instead rely on header values to get IP, session token, or some other identifying piece of info.
+5. Nail down the "next request allowed" calculation. Since I'm using a TTL in seconds from the Redis store, the calculation waivers between two different
+   values depending on when it runs
 
 ### Deployment
 
