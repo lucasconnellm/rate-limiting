@@ -2,14 +2,14 @@
 
 A simple rate limiting example in front of FastAPI
 
-### Running
+## Running
 
 The default rate is 5 requests / 10 seconds which is obviously very low. I did it this way as it was easier for human eyes to test while prototyping.
 There is a crude automated [test](/test/test_server.py) which is hitting the remote ratelimiting.luxas.xyz server.
 
-**Changing rate** If you'd like to try out a different rate, simply adjust the rate [here](/app/di_container.py) in the client_limit variable and host locally
+If you'd like to try out a different rate, simply adjust the rate [here](/app/di_container.py) in the client_limit variable and host locally
 
-#### Local
+### Local
 
 I recommend using docker, as you need a Redis store for my implementation.
 
@@ -21,11 +21,11 @@ docker-compose up -d --build
 
 in the root of the directory.
 
-#### Remote
+### Remote
 
 Just hit the [live demo](http://ratelimiting.luxas.xyz:9001) I'm hosting using the Docker image
 
-### About
+## About
 
 I organized my project using dependency injection and IoC so that I could swap out different caching dbs and rate limiting algorithms without
 needing to change the app code much. I am using a time-bucket algorithm backed by a Redis cache. I recognize that there are pros/cons to this
@@ -35,7 +35,7 @@ time-interval (milliseconds) as low as possible.
 To see my time-bucket algorithm implementation, please see [here](/business/services/time_bucket_limit.py). To see it being put to work, check
 out the middleware that uses it [here](/app/middleware/rate_limit_middleware.py)
 
-### Next Steps
+## Next Steps
 
 There are a few key items I'd implement next, in no particular order:
 
@@ -49,6 +49,6 @@ There are a few key items I'd implement next, in no particular order:
 5. Nail down the "next request allowed" calculation. Since I'm using a TTL in seconds from the Redis store, the calculation waivers between two different
    values depending on when it runs
 
-### Deployment
+## Deployment
 
 In case you're curious, I've packaged this up using docker (see [Dockerfile](/Dockerfile)), am hosting it at over at [dockerhub](https://hub.docker.com/repository/docker/lucasconnellm/rate-limiting), and have deployed it using Portainer on one of my personal Vultr instances.
